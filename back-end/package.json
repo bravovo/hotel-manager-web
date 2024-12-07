@@ -1,0 +1,20 @@
+{
+  "name": "back-end",
+  "version": "0.0.0",
+  "main": "index.mjs",
+  "scripts": {
+    "start": "node index.mjs",
+    "start:dev": "nodemon index.mjs"
+  },
+  "author": "Bohdan Nyshchyi",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "nodemon": "^3.1.7"
+  },
+  "dependencies": {
+    "cors": "^2.8.5"
+  }
+}
