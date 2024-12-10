@@ -1,7 +1,7 @@
 {
   "name": "back-end",
   "version": "0.0.0",
-  "main": "index.mjs",
+  "main": "index.js",
   "scripts": {
     "start": "node index.mjs",
     "start:dev": "nodemon index.mjs"
@@ -15,6 +15,8 @@
     "nodemon": "^3.1.7"
   },
   "dependencies": {
-    "cors": "^2.8.5"
+    "cors": "^2.8.5",
+    "firebase": "^11.0.2",
+    "firebase-admin": "^13.0.1"
   }
 }
