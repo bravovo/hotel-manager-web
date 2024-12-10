@@ -28,15 +28,18 @@ app.get('/hotels', async (request, response) => {
     return response.send(hotels);
 });
 
-app.post('/hotels/add', async (request, response) => {
+app.post('/hotels', async (request, response) => {
+    const { name, email, phoneNumber, roomsCount, address } = request.body;
+    console.log(name);
     try {
         const hotelsRef = db.collection('hotels');
         const hotelDoc = {
-            hotel_name: 'Hotelis',
-            email: 'hotelis@gmail.com',
-            rooms_count: 20,
-            phone_number: '8234729476',
-        };
+            hotel_name: name,
+            email: email,
+            rooms_count: roomsCount,
+            phone_number: phoneNumber,
+            address: address,
+        }
 
         const hotelDocRef = await hotelsRef.add(hotelDoc);
 
