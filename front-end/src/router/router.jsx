@@ -1,6 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Main from '../pages/main/Main';
-import CreateHotel from '../pages/CreateHotel/CreateHotel';
+import CreateHotel from '../pages/createHotel/CreateHotel';
+import Dashboard from '../pages/dashboard/Dashboard';
+import LoginHotel from '../pages/loginHotel/LoginHotel';
 export const router = createBrowserRouter([
     {
         index: true,
@@ -10,6 +12,14 @@ export const router = createBrowserRouter([
     {
         path: '/new-hotel',
         element: <CreateHotel />,
+    },
+    {
+        path: '/dashboard',
+        element: <Dashboard />,
+    },
+    {
+        path: '/login-hotel',
+        element: <LoginHotel />,
     },
     {
         path: '*',
