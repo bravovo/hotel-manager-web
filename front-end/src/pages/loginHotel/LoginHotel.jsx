@@ -25,14 +25,12 @@ const LoginHotel = () => {
             );
 
             if (response.status === 200) {
+                setError('');
                 setSuccess(true);
                 navigate('/dashboard');
-            } else {
-                setError(response.data.message);
             }
         } catch (error) {
-            console.log(error.message);
-            setError(error.message);
+            setError(error.response.data.message);
         }
     };
 
