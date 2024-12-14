@@ -16,18 +16,32 @@ const Dashboard = () => {
 
     const [rooms, setRooms] = useState([]);
     const [roomsError, setRoomsError] = useState([]);
-    const [roomsSuccess, setRoomsSuccess] = useState(false);
+    const [roomSuccess, setRoomSuccess] = useState(false);
 
     useEffect(() => {
         const fetchHotelData = async () => {
             try {
                 const response = await axios.get('http://localhost:5000/hotel', { withCredentials: true });
 
-                if (response.data) {
-                    setHotel(response.data);
+                if (response.data.message && response.data.message === 'No rooms found') {
+                    setRooms([]);
+                }
+
+                if (response.data.hotel) {
+                    setHotel(response.data.hotel);
+                }
+
+                if (response.data.rooms) {
+                    setRooms(response.data.rooms);
                 }
             } catch (error) {
-                setHotelError(error.response.status === 404 ? 'No hotel found' : error.message);
+                if (error.response.status === 404) {
+                    setHotelError('No hotel found');
+                } else if (error.response.status === 500 && error.response.data.message) {
+                    setHotelError(error.response.data.message);
+                } else {
+                    setHotelError(error.message);
+                }
             }
         };
 
@@ -68,7 +82,7 @@ const Dashboard = () => {
 
             if (response.status === 201) {
                 setRoomsError([]);
-                setRoomsSuccess(true);
+                setRoomSuccess(true);
                 console.log(response.data);
                 rooms.push(response.data);
                 setRooms(rooms);
@@ -153,7 +167,7 @@ const Dashboard = () => {
                                     ))}
                                 </div>
                             )}
-                            {roomsSuccess && <p style={{ color: 'green' }}>Room is created</p>}
+                            {roomSuccess && <p style={{ color: 'green' }}>Room is created</p>}
                         </form>
                     )}
                 </div>
@@ -163,9 +177,11 @@ const Dashboard = () => {
                     rooms.map((room) => {
                         return (
                             <div key={room.id}>
+                                <p>{room.id}</p>
                                 <p>{room.name}</p>
                                 <p>{room.number}</p>
                                 <p>{room.price}</p>
+                                <hr />
                             </div>
                         );
                     })
