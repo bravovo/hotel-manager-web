@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import RoomCard from '../roomCard/RoomCard';
 
 const Dashboard = () => {
     const [hotel, setHotel] = useState({ name: '', email: '' });
@@ -21,7 +22,7 @@ const Dashboard = () => {
     useEffect(() => {
         const fetchHotelData = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/hotel', { withCredentials: true });
+                const response = await axios.get('http://localhost:5000/api/hotel', { withCredentials: true });
 
                 if (response.data.message && response.data.message === 'No rooms found') {
                     setRooms([]);
@@ -68,7 +69,7 @@ const Dashboard = () => {
 
         try {
             const response = await axios.post(
-                'http://localhost:5000/hotel/rooms/add',
+                'http://localhost:5000/api/hotel/rooms/add',
                 {
                     number: roomNumber,
                     type: roomType,
@@ -174,17 +175,7 @@ const Dashboard = () => {
             </div>
             <div>
                 {rooms.length > 0 ? (
-                    rooms.map((room) => {
-                        return (
-                            <div key={room.id}>
-                                <p>{room.id}</p>
-                                <p>{room.name}</p>
-                                <p>{room.number}</p>
-                                <p>{room.price}</p>
-                                <hr />
-                            </div>
-                        );
-                    })
+                    rooms.map((room) => <RoomCard key={room.id} roomId={room.id} />)
                 ) : (
                     <p>No rooms yet</p>
                 )}

@@ -14,7 +14,7 @@ const LoginHotel = () => {
 
         try {
             const response = await axios.post(
-                'http://localhost:5000/hotel/auth',
+                'http://localhost:5000/api/hotel/auth',
                 {
                     login: loginValue,
                     password: passwordValue,

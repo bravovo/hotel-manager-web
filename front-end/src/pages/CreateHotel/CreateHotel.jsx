@@ -36,7 +36,7 @@ const CreateHotel = () => {
 
         try {
             const response = await axios.post(
-                'http://localhost:5000/hotels',
+                'http://localhost:5000/api/hotels',
                 {
                     name: nameValue,
                     email: emailValue,

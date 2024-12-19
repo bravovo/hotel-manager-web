@@ -6,6 +6,7 @@ const bcrypt = require('bcryptjs');
 const cors = require('cors');
 const { db } = require('./firebase.js');
 const hotelRoute = require('./routes/hotelRoute.js');
+const roomRoute = require('./routes/roomRoute.js');
 require('dotenv').config();
 
 const PORT = process.env.SERVER_PORT || 5000;
@@ -24,18 +25,25 @@ app.use(
         resave: false,
         cookie: {
             maxAge: 60000 * 60 * 2,
+            secure: false,
         },
     }),
 );
 
-app.use(hotelRoute);
+app.use((req, res, next) => {
+    console.log('Session data:', req.session); // Debug session data
+    next();
+});
+
+app.use('/api', hotelRoute);
+app.use("/api", roomRoute);
 
 app.get('/', (request, response) => {
     console.log('Api is OK');
     return response.send('Api is OK');
 });
 
-app.post('/hotel/auth', async (request, response) => {
+app.post('/api/hotel/auth', async (request, response) => {
     const { login, password } = request.body;
 
     try {
@@ -56,7 +64,14 @@ app.post('/hotel/auth', async (request, response) => {
                 const token = jwt.sign({ id: hotelRef.id.toString() }, JWT_SECRET);
 
                 request.session.hotel = token;
-                return response.status(200).send(hotelData);
+
+                request.session.save((err) => {
+                    if (err) {
+                        console.error('Session save error:', err);
+                        return response.status(500).send({ message: 'Failed to save session' });
+                    }
+                    return response.status(200).send(hotelData);
+                });
             } else {
                 return response.status(400).send({ message: 'Invalid credentials' });
             }

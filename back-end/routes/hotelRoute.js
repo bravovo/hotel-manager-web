@@ -49,37 +49,33 @@ router.post('/hotels', checkSchema(registerHotelValidation), async (request, res
     }
 });
 
-router.get(
-    '/hotel',
-    getHotel,
-    async (request, response) => {
-        const { hotelRef, hotelSnap } = request;
+router.get('/hotel', getHotel, async (request, response) => {
+    const { hotelRef, hotelSnap } = request;
 
-        try {
-            const roomsSubcollectionRef = await hotelRef.collection('rooms').get();
+    try {
+        const roomsSubcollectionRef = await hotelRef.collection('rooms').get();
 
-            if (roomsSubcollectionRef.isEmpty) {
-                return response.status(200).send({ success: true, message: 'No rooms found' });
-            }
-
-            const rooms = roomsSubcollectionRef.docs.map((doc) => {
-                return { id: doc.id, ...doc.data() };
-            });
-
+        if (roomsSubcollectionRef.isEmpty) {
             return response
                 .status(200)
-                .send({
-                    success: true,
-                    message: 'Hotel and rooms Found',
-                    rooms: rooms,
-                    hotel: { id: hotelSnap.id, ...hotelSnap },
-                });
-        } catch (error) {
-            console.error(error);
-            return response.status(500).send({ message: 'Internal server error' });
+                .send({ success: true, message: 'No rooms found', hotel: { id: hotelSnap.id, ...hotelSnap } });
         }
-    },
-);
+
+        const rooms = roomsSubcollectionRef.docs.map((doc) => {
+            return { id: doc.id, ...doc.data() };
+        });
+
+        return response.status(200).send({
+            success: true,
+            message: 'Hotel and rooms Found',
+            rooms: rooms,
+            hotel: { id: hotelSnap.id, ...hotelSnap },
+        });
+    } catch (error) {
+        console.error(error);
+        return response.status(500).send({ message: 'Internal server error' });
+    }
+});
 
 router.post('/hotel/rooms/add', checkSchema(createRoomValidation), getHotel, async (request, response) => {
     const { number, type, capacity, name, description, price } = request.body;

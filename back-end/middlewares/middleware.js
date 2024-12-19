@@ -33,6 +33,8 @@ const getHotel = async (request, response, next) => {
         request.hotelSnap = { id: hotelSnap.id, ...hotelSnap.data() };
         request.hotelRef = hotelRef;
 
+        request.session.hotel = token;
+
         next();
     } catch (error) {
         console.error('Error in getHotel middleware:', error);
