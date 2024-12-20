@@ -1,8 +1,10 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import RoomCard from '../roomCard/RoomCard';
+import RoomCard from '../../components/roomCard/RoomCard';
 
 const Dashboard = () => {
+    const [error, setError] = useState('');
+
     const [hotel, setHotel] = useState({ name: '', email: '' });
     const [hotelError, setHotelError] = useState('');
 
@@ -84,9 +86,15 @@ const Dashboard = () => {
             if (response.status === 201) {
                 setRoomsError([]);
                 setRoomSuccess(true);
-                console.log(response.data);
                 rooms.push(response.data);
                 setRooms(rooms);
+
+                setRoomNumber(0);
+                setRoomType('');
+                setRoomCapacity(0);
+                setRoomName('');
+                setRoomDescription('');
+                setRoomPrice(0);
             }
         } catch (error) {
             if (error.response) {
@@ -97,6 +105,29 @@ const Dashboard = () => {
                 }
             } else {
                 setRoomsError([error.message]);
+            }
+        }
+    };
+
+    const deleteRoom = async (roomId) => {
+        try {
+            const response = await axios.delete('http://localhost:5000/api/rooms/delete', {
+                params: { roomId: roomId },
+                withCredentials: true,
+            });
+
+            if (response.status === 204) {
+                window.alert('Room is deleted');
+
+                setRooms((prevRooms) => prevRooms.filter((room) => room.id !== roomId));
+            } else {
+                setError('Something went wrong');
+            }
+        } catch (error) {
+            if (error.response) {
+                setError(error.response.data.message);
+            } else {
+                setError(error.message);
             }
         }
     };
@@ -175,7 +206,7 @@ const Dashboard = () => {
             </div>
             <div>
                 {rooms.length > 0 ? (
-                    rooms.map((room) => <RoomCard key={room.id} roomId={room.id} />)
+                    rooms.map((room) => <RoomCard key={room.id} roomId={room.id} deleteRoom={deleteRoom} />)
                 ) : (
                     <p>No rooms yet</p>
                 )}

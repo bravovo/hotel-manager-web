@@ -1,4 +1,4 @@
-const { Router } = require('express');
+const { Router, request, response } = require('express');
 const { getHotel } = require('../middlewares/middleware.js');
 require('dotenv').config();
 
@@ -21,8 +21,23 @@ router.get('/room', getHotel, async (request, response) => {
     } catch (error) {
         console.error(error);
         return response.sendStatus(500);
+    } 
+});
+
+router.delete('/rooms/delete', getHotel, async (request, response) => {
+    const { hotelRef } = request;
+    const { roomId } = request.query;
+
+    try {
+        const roomRef = hotelRef.collection('rooms').doc(roomId);
+
+        await roomRef.delete();
+
+        return response.sendStatus(204);
+    } catch (error) {
+        console.error(error.message);
+        return response.status(500).send({ message: 'Internal server error' });
     }
-    
 });
 
 module.exports = router;

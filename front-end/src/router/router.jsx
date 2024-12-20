@@ -3,7 +3,7 @@ import Main from '../pages/main/Main';
 import CreateHotel from '../pages/createHotel/CreateHotel';
 import Dashboard from '../pages/dashboard/Dashboard';
 import LoginHotel from '../pages/loginHotel/LoginHotel';
-import ModifyRoom from '../pages/modifyRoom/ModifyRoom';
+// import ModifyRoom from '../pages/modifyRoom/ModifyRoom';
 export const router = createBrowserRouter([
     {
         index: true,
@@ -18,10 +18,10 @@ export const router = createBrowserRouter([
         path: '/dashboard',
         element: <Dashboard />,
     },
-    {
-        path: '/modify-room',
-        element: <ModifyRoom />,
-    },
+    // {
+    //     path: '/modify-room',
+    //     element: <ModifyRoom />,
+    // },
     {
         path: '/login-hotel',
         element: <LoginHotel />,
