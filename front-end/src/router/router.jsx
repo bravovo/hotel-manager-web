@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Main from '../pages/main/Main';
-import CreateHotel from '../pages/createHotel/CreateHotel';
+import CreateHotel from '../pages/CreateHotel/CreateHotel';
 import Dashboard from '../pages/dashboard/Dashboard';
 import LoginHotel from '../pages/loginHotel/LoginHotel';
 // import ModifyRoom from '../pages/modifyRoom/ModifyRoom';

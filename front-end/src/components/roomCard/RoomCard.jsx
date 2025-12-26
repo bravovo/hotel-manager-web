@@ -42,22 +42,70 @@ const RoomCard = ({ roomId, deleteRoom }) => {
     };
 
     return (
-        <div>
-            {room ? (
-                <div>
-                    <div>
-                        <p>{room.name}</p>
-                        <p>{room.number}</p>
-                        <p>{room.price}</p>
+        <div
+            style={{
+                backgroundColor: '#3a3a3a',
+                padding: '20px',
+                borderRadius: '8px',
+                border: '1px solid #404040',
+                transition: 'all 0.2s ease',
+            }}
+            onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = '#4a9eff';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = '0 4px 12px rgba(74, 158, 255, 0.2)';
+            }}
+            onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = '#404040';
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = 'none';
+            }}
+        >
+            {room && !error ? (
+                <>
+                    <div style={{ marginBottom: '16px' }}>
+                        <h3 style={{ fontSize: '20px', marginBottom: '8px', color: '#4a9eff' }}>{room.name}</h3>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', color: '#b0b0b0' }}>
+                            <p>
+                                <strong>Room Number:</strong> {room.number}
+                            </p>
+                            <p>
+                                <strong>Type:</strong> {room.type}
+                            </p>
+                            <p>
+                                <strong>Capacity:</strong> {room.capacity} guests
+                            </p>
+                            {room.description && (
+                                <p>
+                                    <strong>Description:</strong> {room.description}
+                                </p>
+                            )}
+                            <p style={{ fontSize: '18px', color: '#4a9eff', marginTop: '8px' }}>
+                                <strong>${room.price}</strong> per night
+                            </p>
+                        </div>
                     </div>
-                    <hr />
-                    <div style={{ display: 'flex', flexDirection: 'row', gap: '20px' }}>
-                        <button>Modify</button>
-                        <button onClick={handleDelete}>Delete</button>
+                    <hr style={{ border: 'none', borderTop: '1px solid #404040', margin: '16px 0' }} />
+                    <div style={{ display: 'flex', flexDirection: 'row', gap: '12px' }}>
+                        <button style={{ flex: 1, backgroundColor: '#3a3a3a', border: '1px solid #4a9eff' }}>
+                            Modify
+                        </button>
+                        <button
+                            onClick={handleDelete}
+                            style={{ flex: 1, backgroundColor: '#f44336' }}
+                            onMouseEnter={(e) => {
+                                e.currentTarget.style.backgroundColor = '#d32f2f';
+                            }}
+                            onMouseLeave={(e) => {
+                                e.currentTarget.style.backgroundColor = '#f44336';
+                            }}
+                        >
+                            Delete
+                        </button>
                     </div>
-                </div>
+                </>
             ) : (
-                <p>No room found {error}</p>
+                <p style={{ color: '#f44336' }}>No room found. {error}</p>
             )}
         </div>
     );
