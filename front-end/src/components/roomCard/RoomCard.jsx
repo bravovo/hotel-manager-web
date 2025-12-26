@@ -42,22 +42,70 @@ const RoomCard = ({ roomId, deleteRoom }) => {
     };
 
     return (
-        <div>
-            {room ? (
-                <div>
-                    <div>
-                        <p>{room.name}</p>
-                        <p>{room.number}</p>
-                        <p>{room.price}</p>
+        <div
+            className="room-card"
+            style={{
+                backgroundColor: 'var(--color-bg-tertiary)',
+                padding: '20px',
+                borderRadius: '8px',
+                border: '1px solid var(--color-border)',
+            }}
+        >
+            {room && !error ? (
+                <>
+                    <div style={{ marginBottom: '16px' }}>
+                        <h3 style={{ fontSize: '20px', marginBottom: '8px', color: 'var(--color-accent)' }}>
+                            {room.name}
+                        </h3>
+                        <div
+                            style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: '4px',
+                                color: 'var(--color-text-secondary)',
+                            }}
+                        >
+                            <p>
+                                <strong>Room Number:</strong> {room.number}
+                            </p>
+                            <p>
+                                <strong>Type:</strong> {room.type}
+                            </p>
+                            <p>
+                                <strong>Capacity:</strong> {room.capacity} guests
+                            </p>
+                            {room.description && (
+                                <p>
+                                    <strong>Description:</strong> {room.description}
+                                </p>
+                            )}
+                            <p style={{ fontSize: '18px', color: 'var(--color-accent)', marginTop: '8px' }}>
+                                <strong>${room.price}</strong> per night
+                            </p>
+                        </div>
                     </div>
-                    <hr />
-                    <div style={{ display: 'flex', flexDirection: 'row', gap: '20px' }}>
-                        <button>Modify</button>
-                        <button onClick={handleDelete}>Delete</button>
+                    <hr style={{ border: 'none', borderTop: '1px solid var(--color-border)', margin: '16px 0' }} />
+                    <div style={{ display: 'flex', flexDirection: 'row', gap: '12px' }}>
+                        <button
+                            style={{
+                                flex: 1,
+                                backgroundColor: 'var(--color-bg-tertiary)',
+                                border: '1px solid var(--color-accent)',
+                            }}
+                        >
+                            Modify
+                        </button>
+                        <button
+                            onClick={handleDelete}
+                            className="delete-button"
+                            style={{ flex: 1, backgroundColor: 'var(--color-error)' }}
+                        >
+                            Delete
+                        </button>
                     </div>
-                </div>
+                </>
             ) : (
-                <p>No room found {error}</p>
+                <p style={{ color: 'var(--color-error)' }}>No room found. {error}</p>
             )}
         </div>
     );
