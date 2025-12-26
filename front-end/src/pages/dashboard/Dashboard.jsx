@@ -96,8 +96,6 @@ const Dashboard = () => {
                 setRoomName('');
                 setRoomDescription('');
                 setRoomPrice(0);
-
-                setTimeout(() => setRoomSuccess(false), 3000);
             }
         } catch (error) {
             if (error.response) {

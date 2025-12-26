@@ -41,26 +41,27 @@ const RoomCard = ({ roomId, deleteRoom }) => {
         }
     };
 
+    const cardStyle = {
+        backgroundColor: '#3a3a3a',
+        padding: '20px',
+        borderRadius: '8px',
+        border: '1px solid #404040',
+        transition: 'all 0.2s ease',
+    };
+
+    const modifyButtonStyle = {
+        flex: 1,
+        backgroundColor: '#3a3a3a',
+        border: '1px solid #4a9eff',
+    };
+
+    const deleteButtonStyle = {
+        flex: 1,
+        backgroundColor: '#f44336',
+    };
+
     return (
-        <div
-            style={{
-                backgroundColor: '#3a3a3a',
-                padding: '20px',
-                borderRadius: '8px',
-                border: '1px solid #404040',
-                transition: 'all 0.2s ease',
-            }}
-            onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = '#4a9eff';
-                e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = '0 4px 12px rgba(74, 158, 255, 0.2)';
-            }}
-            onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = '#404040';
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = 'none';
-            }}
-        >
+        <div style={cardStyle} className="room-card">
             {room && !error ? (
                 <>
                     <div style={{ marginBottom: '16px' }}>
@@ -87,22 +88,23 @@ const RoomCard = ({ roomId, deleteRoom }) => {
                     </div>
                     <hr style={{ border: 'none', borderTop: '1px solid #404040', margin: '16px 0' }} />
                     <div style={{ display: 'flex', flexDirection: 'row', gap: '12px' }}>
-                        <button style={{ flex: 1, backgroundColor: '#3a3a3a', border: '1px solid #4a9eff' }}>
+                        <button style={modifyButtonStyle} className="modify-button">
                             Modify
                         </button>
-                        <button
-                            onClick={handleDelete}
-                            style={{ flex: 1, backgroundColor: '#f44336' }}
-                            onMouseEnter={(e) => {
-                                e.currentTarget.style.backgroundColor = '#d32f2f';
-                            }}
-                            onMouseLeave={(e) => {
-                                e.currentTarget.style.backgroundColor = '#f44336';
-                            }}
-                        >
+                        <button onClick={handleDelete} style={deleteButtonStyle} className="delete-button">
                             Delete
                         </button>
                     </div>
+                    <style>{`
+                        .room-card:hover {
+                            border-color: #4a9eff;
+                            transform: translateY(-2px);
+                            box-shadow: 0 4px 12px rgba(74, 158, 255, 0.2);
+                        }
+                        .delete-button:hover {
+                            background-color: #d32f2f !important;
+                        }
+                    `}</style>
                 </>
             ) : (
                 <p style={{ color: '#f44336' }}>No room found. {error}</p>
