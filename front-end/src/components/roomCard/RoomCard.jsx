@@ -41,32 +41,30 @@ const RoomCard = ({ roomId, deleteRoom }) => {
         }
     };
 
-    const cardStyle = {
-        backgroundColor: '#3a3a3a',
-        padding: '20px',
-        borderRadius: '8px',
-        border: '1px solid #404040',
-        transition: 'all 0.2s ease',
-    };
-
-    const modifyButtonStyle = {
-        flex: 1,
-        backgroundColor: '#3a3a3a',
-        border: '1px solid #4a9eff',
-    };
-
-    const deleteButtonStyle = {
-        flex: 1,
-        backgroundColor: '#f44336',
-    };
-
     return (
-        <div style={cardStyle} className="room-card">
+        <div
+            className="room-card"
+            style={{
+                backgroundColor: 'var(--color-bg-tertiary)',
+                padding: '20px',
+                borderRadius: '8px',
+                border: '1px solid var(--color-border)',
+            }}
+        >
             {room && !error ? (
                 <>
                     <div style={{ marginBottom: '16px' }}>
-                        <h3 style={{ fontSize: '20px', marginBottom: '8px', color: '#4a9eff' }}>{room.name}</h3>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', color: '#b0b0b0' }}>
+                        <h3 style={{ fontSize: '20px', marginBottom: '8px', color: 'var(--color-accent)' }}>
+                            {room.name}
+                        </h3>
+                        <div
+                            style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: '4px',
+                                color: 'var(--color-text-secondary)',
+                            }}
+                        >
                             <p>
                                 <strong>Room Number:</strong> {room.number}
                             </p>
@@ -81,33 +79,33 @@ const RoomCard = ({ roomId, deleteRoom }) => {
                                     <strong>Description:</strong> {room.description}
                                 </p>
                             )}
-                            <p style={{ fontSize: '18px', color: '#4a9eff', marginTop: '8px' }}>
+                            <p style={{ fontSize: '18px', color: 'var(--color-accent)', marginTop: '8px' }}>
                                 <strong>${room.price}</strong> per night
                             </p>
                         </div>
                     </div>
-                    <hr style={{ border: 'none', borderTop: '1px solid #404040', margin: '16px 0' }} />
+                    <hr style={{ border: 'none', borderTop: '1px solid var(--color-border)', margin: '16px 0' }} />
                     <div style={{ display: 'flex', flexDirection: 'row', gap: '12px' }}>
-                        <button style={modifyButtonStyle} className="modify-button">
+                        <button
+                            style={{
+                                flex: 1,
+                                backgroundColor: 'var(--color-bg-tertiary)',
+                                border: '1px solid var(--color-accent)',
+                            }}
+                        >
                             Modify
                         </button>
-                        <button onClick={handleDelete} style={deleteButtonStyle} className="delete-button">
+                        <button
+                            onClick={handleDelete}
+                            className="delete-button"
+                            style={{ flex: 1, backgroundColor: 'var(--color-error)' }}
+                        >
                             Delete
                         </button>
                     </div>
-                    <style>{`
-                        .room-card:hover {
-                            border-color: #4a9eff;
-                            transform: translateY(-2px);
-                            box-shadow: 0 4px 12px rgba(74, 158, 255, 0.2);
-                        }
-                        .delete-button:hover {
-                            background-color: #d32f2f !important;
-                        }
-                    `}</style>
                 </>
             ) : (
-                <p style={{ color: '#f44336' }}>No room found. {error}</p>
+                <p style={{ color: 'var(--color-error)' }}>No room found. {error}</p>
             )}
         </div>
     );
